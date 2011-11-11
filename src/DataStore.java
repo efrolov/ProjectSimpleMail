@@ -4,13 +4,14 @@ import java.util.ArrayList;
 public class DataStore {
 	private Configuration myConf;
 	private ArrayList<Contact> myContacts;
-	private DataStore myInstance = null;
+	private static DataStore myInstance = null;
 	
 	private DataStore()
 	{
+		myContacts = new ArrayList<Contact>();
 	}
 	
-	public DataStore getInstance()
+	public static DataStore getInstance()
 	{
 		if(myInstance == null)
 		{
@@ -34,6 +35,7 @@ public class DataStore {
 	
 	public void addContact(Contact c)
 	{
+		myContacts.add(c);
 	}
 	
 	public void save()
