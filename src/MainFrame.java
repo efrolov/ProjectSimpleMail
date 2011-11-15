@@ -22,7 +22,7 @@ public class MainFrame extends JFrame implements ActionListener {
 
 	public MainFrame()
 	{
-		super("Main Frame");
+		super("SimpleMail");
 		myTableModel = new ContactTableModel();
 		JFrame.setDefaultLookAndFeelDecorated(true);
 		// Create and set up the window.
@@ -63,7 +63,10 @@ public class MainFrame extends JFrame implements ActionListener {
 		jplContentPane.setOpaque(true);
 		setJMenuBar(menuBar);
 		setContentPane(jplContentPane);
-		jplContentPane.add(createTable());
+		JTable tTab = createTable();
+		tTab.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
+		jplContentPane.add(tTab.getTableHeader(), BorderLayout.PAGE_START);
+		jplContentPane.add(tTab, BorderLayout.CENTER);
 		setSize(800, 600);
 		setVisible(true);
 	}

@@ -13,6 +13,7 @@ public class ContactTableModel extends AbstractTableModel {
 		myContents = d.getMyContacts();
 	}
 	
+	@Override
 	public String getColumnName(int col) {
 		String[] cNames = {"First","MI","Last","Email Address","Phone Number",
 				"Street Address","City","State","ZIP Code"};
