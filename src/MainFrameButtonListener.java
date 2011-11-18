@@ -8,7 +8,8 @@ public class MainFrameButtonListener implements ActionListener {
 		String action = e.getActionCommand();
 		if(action.compareTo("add")==0)
 		{
-			// Construct a ContactEditingDialog and handle it
+			Contact b = new Contact();
+			ContactEditingDialog cEdit = new ContactEditingDialog(b);
 		}
 		else if(action.compareTo("edit")==0)
 		{
