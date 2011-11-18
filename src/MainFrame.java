@@ -1,8 +1,6 @@
 import java.awt.BorderLayout;
+import java.awt.Button;
 import java.awt.Color;
-import java.awt.Container;
-import java.awt.Dimension;
-import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -12,6 +10,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
 
@@ -57,16 +56,51 @@ public class MainFrame extends JFrame implements ActionListener {
 		h1.setName("about");
 		h1.addActionListener(this);
 		helpM.add(h1);
+		setJMenuBar(menuBar);
 		
 		// Create the content-pane-to-be.
-		JPanel jplContentPane = new JPanel(new BorderLayout());
-		jplContentPane.setOpaque(true);
-		setJMenuBar(menuBar);
-		setContentPane(jplContentPane);
+		JPanel contentPane = new JPanel(new BorderLayout());
+		
+		//Create the JPanel to hold the table
+		JPanel tablePane = new JPanel(new BorderLayout());
+		tablePane.setOpaque(true);
+		setContentPane(contentPane);
+		
+		//Create the table and add it to its container
 		JTable tTab = createTable();
 		tTab.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
-		jplContentPane.add(tTab.getTableHeader(), BorderLayout.PAGE_START);
-		jplContentPane.add(tTab, BorderLayout.CENTER);
+		JScrollPane sP = new JScrollPane(tTab);
+		tablePane.add(sP,BorderLayout.NORTH);
+		
+		//Create the buttons panel
+		JPanel buttons = new JPanel();
+		
+		//Create an ActionListener
+		ActionListener aL = new MainFrameButtonListener();
+		
+		//Create the buttons and add them to their container
+		Button add = new Button("Add");
+		add.setSize(100, 50);
+		add.setActionCommand("add");
+		add.addActionListener(aL);
+		add.setBackground(Color.GREEN);
+		Button edit = new Button("Edit...");
+		edit.setSize(100, 50);
+		edit.setActionCommand("edit");
+		edit.addActionListener(aL);
+		edit.setBackground(Color.YELLOW);
+		Button delete = new Button("Delete");
+		delete.setSize(100, 50);
+		delete.setActionCommand("delete");
+		delete.addActionListener(aL);
+		delete.setBackground(Color.RED);
+		buttons.add(add);
+		buttons.add(edit);
+		buttons.add(delete);
+		
+		//Add the panels to the content pane
+		contentPane.add(buttons, BorderLayout.SOUTH);
+		contentPane.add(tablePane, BorderLayout.NORTH);
 		setSize(800, 600);
 		setVisible(true);
 	}
