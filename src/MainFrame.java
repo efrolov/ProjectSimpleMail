@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -26,7 +25,6 @@ public class MainFrame extends JFrame implements ActionListener {
 		JFrame.setDefaultLookAndFeelDecorated(true);
 		// Create and set up the window.
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
 		JMenuBar menuBar;
 		JMenu fileM, configM, helpM;
 		JMenuItem f1, c1, h1;
