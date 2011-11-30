@@ -7,7 +7,6 @@ public class SimpleMail {
 	public static void main(String[] args) {
 		DataStore.setFolderPath("data/");
 		MainFrame main = new MainFrame();
-		DataStore.getInstance().save();
 	}
 
 }

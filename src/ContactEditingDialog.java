@@ -1,6 +1,7 @@
 import java.awt.BorderLayout;
 import java.awt.Button;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JDialog;
@@ -9,9 +10,18 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 
-public class ContactEditingDialog extends JDialog {
+public class ContactEditingDialog extends JDialog implements ActionListener {
 
 	private static final long serialVersionUID = 6991911125167356556L;
+	private JTextField firstTF;
+	private JTextField miTF;
+	private JTextField lastTF;
+	private JTextField adTF;
+	private JTextField cityTF;
+	private JTextField stateTF;
+	private JTextField zipTF;
+	private JTextField phoneTF;
+	private JTextField emailTF;
 	private Contact myContact;
 	
 	public ContactEditingDialog(Contact c)
@@ -25,23 +35,23 @@ public class ContactEditingDialog extends JDialog {
 		JPanel buttonPane = new JPanel();
 		
 		JLabel first = new JLabel("First Name:");
-		JTextField firstTF = new JTextField(myContact.getMyFirst());
+		firstTF = new JTextField(myContact.getMyFirst());
 		JLabel mi = new JLabel("MI:");
-		JTextField miTF = new JTextField(myContact.getMyMI());
+		miTF = new JTextField(myContact.getMyMI());
 		JLabel last = new JLabel("Last Name:");
-		JTextField lastTF = new JTextField(myContact.getMyLast());
+		lastTF = new JTextField(myContact.getMyLast());
 		JLabel ad = new JLabel("Street Address:");
-		JTextField adTF = new JTextField(myContact.getMyStreetAddress());
+		adTF = new JTextField(myContact.getMyStreetAddress());
 		JLabel city = new JLabel("City:");
-		JTextField cityTF = new JTextField(myContact.getMyCity());
+		cityTF = new JTextField(myContact.getMyCity());
 		JLabel state = new JLabel("State:");
-		JTextField stateTF = new JTextField(myContact.getMyState());
+		stateTF = new JTextField(myContact.getMyState());
 		JLabel zip = new JLabel("ZIP:");
-		JTextField zipTF = new JTextField(myContact.getMyZIP());
+		zipTF = new JTextField(myContact.getMyZIP());
 		JLabel phone = new JLabel("Phone:");
-		JTextField phoneTF = new JTextField(myContact.getMyPhone());
+		phoneTF = new JTextField(myContact.getMyPhone());
 		JLabel email = new JLabel("E-Mail:");
-		JTextField emailTF = new JTextField(myContact.getMyEmail());
+		emailTF = new JTextField(myContact.getMyEmail());
 		
 		textPane.add(first);
 		textPane.add(firstTF);
@@ -65,7 +75,7 @@ public class ContactEditingDialog extends JDialog {
 		textGridLayout.layoutContainer(textPane);
 		contentPane.add(textPane, BorderLayout.PAGE_START);
 		
-		ActionListener aL = new ContactEditingDialogButtonListener(this);
+		ActionListener aL = (this);
 		
 		Button cancel = new Button("Cancel");
 		cancel.setSize(100, 50);
@@ -84,6 +94,37 @@ public class ContactEditingDialog extends JDialog {
 		setModal(true);
 		setSize(400,250);
 		setVisible(true);
+	}
+	
+	@Override
+	public void actionPerformed(ActionEvent arg0) {
+		String action = arg0.getActionCommand();
+		if(action.compareTo("cancel")==0)
+		{
+			dispose();
+		}
+		else if(action.compareTo("save")==0)
+		{
+			DataStore d = DataStore.getInstance();
+			myContact.setMyFirst(firstTF.getText());
+			myContact.setMyMI(miTF.getText());
+			myContact.setMyLast(lastTF.getText());
+			myContact.setMyCity(cityTF.getText());
+			myContact.setMyStreetAddress(adTF.getText());
+			myContact.setMyZIP(zipTF.getText());
+			myContact.setMyPhone(phoneTF.getText());
+			myContact.setMyState(stateTF.getText());
+			myContact.setMyEmail(emailTF.getText());
+			if(d.containsContact(myContact))
+			{
+				d.updateContact(myContact);
+			}
+			else
+			{
+				d.addContact(myContact);
+			}
+			dispose();
+		}
 	}
 
 }

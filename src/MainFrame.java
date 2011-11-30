@@ -4,6 +4,9 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
+
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -13,10 +16,11 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
 
-public class MainFrame extends JFrame implements ActionListener {
+public class MainFrame extends JFrame implements ActionListener, WindowListener {
 
 	private static final long serialVersionUID = 2269971701250845501L;
 	private ContactTableModel myTableModel;
+	private JTable myTable;
 
 	public MainFrame()
 	{
@@ -24,7 +28,8 @@ public class MainFrame extends JFrame implements ActionListener {
 		myTableModel = new ContactTableModel();
 		JFrame.setDefaultLookAndFeelDecorated(true);
 		// Create and set up the window.
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		this.addWindowListener(this);
 		JMenuBar menuBar;
 		JMenu fileM, configM, helpM;
 		JMenuItem f1, c1, h1;
@@ -65,9 +70,9 @@ public class MainFrame extends JFrame implements ActionListener {
 		setContentPane(contentPane);
 		
 		//Create the table and add it to its container
-		JTable tTab = createTable();
-		tTab.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
-		JScrollPane sP = new JScrollPane(tTab);
+		myTable = createTable();
+		myTable.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
+		JScrollPane sP = new JScrollPane(myTable);
 		tablePane.add(sP,BorderLayout.NORTH);
 		
 		//Create the buttons panel
@@ -125,5 +130,52 @@ public class MainFrame extends JFrame implements ActionListener {
 		{
 			//Some more good stuff should happen here
 		}
+		else if(s.compareTo("add")==0)
+		{
+			Contact b = new Contact();
+			ContactEditingDialog cEdit = new ContactEditingDialog(b);
+		}
+		else if(s.compareTo("edit")==0)
+		{
+		}
+		else if(s.compareTo("delete")==0)
+		{
+			//  Construct a ContactEditingDialog and handle it (use the dataStore)
+		}
+		else
+		{
+			System.err.println("Unhandled action.  DO SOMETHING!");
+		}
+	}
+
+	@Override
+	public void windowActivated(WindowEvent arg0) {
+	}
+
+	@Override
+	public void windowClosed(WindowEvent arg0) {
+	}
+
+	@Override
+	public void windowClosing(WindowEvent arg0) {
+		DataStore d = DataStore.getInstance();
+		d.save();
+		dispose();
+	}
+
+	@Override
+	public void windowDeactivated(WindowEvent arg0) {
+	}
+
+	@Override
+	public void windowDeiconified(WindowEvent arg0) {	
+	}
+
+	@Override
+	public void windowIconified(WindowEvent arg0) {
+	}
+
+	@Override
+	public void windowOpened(WindowEvent arg0) {	
 	}
 }

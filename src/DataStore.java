@@ -80,6 +80,17 @@ public class DataStore {
 		myContacts.add(c);
 	}
 	
+	public boolean containsContact(Contact c)
+	{
+		return myContacts.contains(c);
+	}
+	
+	public void updateContact(Contact c)
+	{
+		myContacts.remove(c);
+		myContacts.add(c);
+	}
+	
 	public void save()
 	{
 		for(Contact c : myContacts)

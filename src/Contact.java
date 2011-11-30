@@ -60,5 +60,26 @@ public class Contact implements Serializable {
 	public void setMyEmail(String myEmail) {
 		this.myEmail = myEmail;
 	}
+	
+	@Override
+	public boolean equals(Object o)
+	{
+		Contact rhs = (Contact)o;
+//		if(myFirst.compareTo(rhs.getMyFirst())==0 &&
+//				myMI.compareTo(rhs.getMyMI())==0 &&
+//				myLast.compareTo(rhs.myLast)==0 &&
+//				myStreetAddress.compareTo(rhs.getMyStreetAddress())==0 &&
+//				myCity.compareTo(rhs.getMyCity())==0 &&
+//				myState.compareTo(rhs.getMyState())==0 &&
+//				myZIP.compareTo(rhs.getMyZIP())==0 &&
+//				myPhone.compareTo(rhs.getMyPhone())==0 &&
+				if(
+						myEmail.compareTo(rhs.getMyEmail())==0
+				)
+		{
+			return true;
+		}
+		return false;
+	}
 
 }
