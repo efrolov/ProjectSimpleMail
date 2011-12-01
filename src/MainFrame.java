@@ -137,8 +137,14 @@ public class MainFrame extends JFrame implements ActionListener, WindowListener 
 		}
 		else if(s.compareTo("edit")==0)
 		{
+			try{
 			Contact c = myTable.getContactAtRow(myTable.getSelectedRow());
 			ContactEditingDialog cEdit = new ContactEditingDialog(c);
+			} catch (ArrayIndexOutOfBoundsException e){
+				System.out.println("You have not selected a contact to be edited. " +
+						"Please select a contact and try again.");
+				
+			}
 		}
 		else if(s.compareTo("delete")==0)
 		{
