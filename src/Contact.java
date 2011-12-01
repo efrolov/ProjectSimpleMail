@@ -1,6 +1,10 @@
 import java.io.Serializable;
 
-
+/**
+ * <p>A class that represents a Contact containing a first name, 
+ * a middle initial, a last name, a street address, a city, a state, 
+ * a ZIP code, a phone number, and an email address.</p>
+ */
 public class Contact implements Serializable {
 
 	private static final long serialVersionUID = 4445549905840681824L;
@@ -61,6 +65,12 @@ public class Contact implements Serializable {
 		this.myEmail = myEmail;
 	}
 	
+	/**
+	 * <p>Determines whether this {@code Contact} is equal 
+	 * to the {@code Contact} passed in the parameter.  
+	 * The parameter must be of type {@code Contact}.</p>
+	 * @param o an {@code Object} to be compared to this {@code Contact}
+	 */
 	@Override
 	public boolean equals(Object o)
 	{

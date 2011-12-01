@@ -2,11 +2,22 @@ import java.util.ArrayList;
 
 import javax.swing.table.AbstractTableModel;
 
+/**
+ * <p>The model for the data to be displayed in the {@code JContactTable} class.</p>
+ * @see JContactTable
+ */
 public class ContactTableModel extends AbstractTableModel {
 
 	private static final long serialVersionUID = 7462013655239078316L;
 	private ArrayList<Contact> myContents;
 	
+	/**
+	 * <p>Creates a new {@code ContactTableModel} with the data from the 
+	 * {@code DataStore} singleton in this application environment.  
+	 * The DataStore object must have been properly initialized prior to the 
+	 * construction of this {@code ContactTableModel}.</p>
+	 * @see DataStore
+	 */
 	public ContactTableModel()
 	{
 		DataStore d = DataStore.getInstance();

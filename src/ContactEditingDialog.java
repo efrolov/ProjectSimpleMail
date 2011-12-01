@@ -9,7 +9,11 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-
+/**
+ * <p>A child of {@code JDialog} that implements {@code ActionListener} 
+ * to create a dialog for editing objects of type {@code Contact}.</p>
+ * @see ActionListener, Contact, JDialog
+ */
 public class ContactEditingDialog extends JDialog implements ActionListener {
 
 	private static final long serialVersionUID = 6991911125167356556L;
@@ -24,9 +28,16 @@ public class ContactEditingDialog extends JDialog implements ActionListener {
 	private JTextField emailTF;
 	private Contact myContact;
 	
+	/**
+	 * <p>Creates a new {@code ContactEditingDialog} initialized with the 
+	 * values from the {@code Contact} passed as a parameter.  The 
+	 * parameter must be non-null.</p>
+	 * @param c a {@code Contact} to be edited by this dialog
+	 */
 	public ContactEditingDialog(Contact c)
 	{
 		super();
+		this.setTitle("Add/Edit Contact");
 		myContact = c;
 		GridLayout textGridLayout = new GridLayout(9,2);
 		JPanel contentPane = new JPanel(new BorderLayout());
@@ -96,6 +107,12 @@ public class ContactEditingDialog extends JDialog implements ActionListener {
 		setVisible(true);
 	}
 	
+	/**
+	 * <p>A method of ActionListener that catches {@code ActionEvent}s 
+	 * created by the menu and buttons of this dialog and reacts accordingly.
+	 * </p>
+	 * @param arg0 the {@code ActionEvent} for which a reaction is necessary
+	 */
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		String action = arg0.getActionCommand();

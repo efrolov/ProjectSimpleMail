@@ -20,7 +20,7 @@ public class MainFrame extends JFrame implements ActionListener, WindowListener 
 
 	private static final long serialVersionUID = 2269971701250845501L;
 	private ContactTableModel myTableModel;
-	private JTable myTable;
+	private JContactTable myTable;
 
 	public MainFrame()
 	{
@@ -40,7 +40,7 @@ public class MainFrame extends JFrame implements ActionListener, WindowListener 
 		// Creating the MenuItems
 		f1 = new JMenuItem("Exit",
 				KeyEvent.VK_X);
-		f1.setName("exit");
+		f1.setActionCommand("exit");
 		f1.addActionListener(this);
 		fileM.add(f1);
 		configM = new JMenu("Configuration");
@@ -48,7 +48,7 @@ public class MainFrame extends JFrame implements ActionListener, WindowListener 
 		menuBar.add(configM);
 		c1 = new JMenuItem("Configure...",
 				KeyEvent.VK_C);
-		c1.setName("config");
+		c1.setActionCommand("config");
 		c1.addActionListener(this);
 		configM.add(c1);
 		helpM = new JMenu("Help");
@@ -56,7 +56,7 @@ public class MainFrame extends JFrame implements ActionListener, WindowListener 
 		menuBar.add(helpM);
 		h1 = new JMenuItem("About",
 				KeyEvent.VK_A);
-		h1.setName("about");
+		h1.setActionCommand("about");
 		h1.addActionListener(this);
 		helpM.add(h1);
 		setJMenuBar(menuBar);
@@ -79,7 +79,7 @@ public class MainFrame extends JFrame implements ActionListener, WindowListener 
 		JPanel buttons = new JPanel();
 		
 		//Create an ActionListener
-		ActionListener aL = new MainFrameButtonListener();
+		ActionListener aL = this;
 		
 		//Create the buttons and add them to their container
 		Button add = new Button("Add");
@@ -108,23 +108,23 @@ public class MainFrame extends JFrame implements ActionListener, WindowListener 
 		setVisible(true);
 	}
 	
-	private JTable createTable()
+	private JContactTable createTable()
 	{
-		JTable t = new JTable(myTableModel);
+		JContactTable t = new JContactTable(myTableModel);
 		return t;
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		JMenuItem source = (JMenuItem) (arg0.getSource());
-		String s = source.getName();
+		String s = arg0.getActionCommand();
 		if(s.compareTo("exit")==0)
 		{
-			System.exit(0);
+			dispose();
 		}
 		else if(s.compareTo("config")==0)
 		{
-			//Do some good stuff
+			Configuration c = new Configuration();
+			ConfigurationDialog confD = new ConfigurationDialog(c);
 		}
 		else if(s.compareTo("about")==0)
 		{
@@ -137,10 +137,12 @@ public class MainFrame extends JFrame implements ActionListener, WindowListener 
 		}
 		else if(s.compareTo("edit")==0)
 		{
+			Contact c = myTable.getContactAtRow(myTable.getSelectedRow());
+			ContactEditingDialog cEdit = new ContactEditingDialog(c);
 		}
 		else if(s.compareTo("delete")==0)
 		{
-			//  Construct a ContactEditingDialog and handle it (use the dataStore)
+			//  Delete the selected shit from DataStore
 		}
 		else
 		{
