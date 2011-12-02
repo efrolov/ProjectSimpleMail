@@ -123,7 +123,7 @@ public class MainFrame extends JFrame implements ActionListener, WindowListener 
 		}
 		else if(s.compareTo("config")==0)
 		{
-			Configuration c = new Configuration();
+			Configuration c = DataStore.getInstance().getMyConfiguration();
 			ConfigurationDialog confD = new ConfigurationDialog(c);
 		}
 		else if(s.compareTo("about")==0)
@@ -148,7 +148,13 @@ public class MainFrame extends JFrame implements ActionListener, WindowListener 
 		}
 		else if(s.compareTo("delete")==0)
 		{
-			//  Delete the selected shit from DataStore
+			try{
+				Contact c = myTable.getContactAtRow(myTable.getSelectedRow());
+				DataStore.getInstance().removeContact(c);
+				} catch (ArrayIndexOutOfBoundsException e){
+					System.out.println("You have not selected a contact to be deleted. " +
+							"Please select a contact and try again.");
+				}
 		}
 		else
 		{

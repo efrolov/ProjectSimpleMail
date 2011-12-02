@@ -3,6 +3,8 @@ import java.awt.Button;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.Inet4Address;
+import java.net.UnknownHostException;
 
 import javax.swing.JDialog;
 import javax.swing.JLabel;
@@ -30,7 +32,7 @@ public class ConfigurationDialog extends JDialog implements ActionListener {
 		JPanel buttonPane = new JPanel();
 		
 		JLabel ip = new JLabel("SMTP Server IP:");
-		myIP = new JTextField(myConf.getMySMTP().getHostAddress());
+		myIP = new JTextField(myConf.getMySMTP().getHostName());
 		JLabel em = new JLabel("Main Email Address:");
 		myEmail = new JTextField(myConf.getMyEmail());
 		
@@ -72,7 +74,15 @@ public class ConfigurationDialog extends JDialog implements ActionListener {
 		}
 		else if(s.compareTo("save")==0)
 		{
-			// Do something good here too.
+			DataStore d = DataStore.getInstance();
+			myConf.setMyEmail(myEmail.getText());
+			try {
+				myConf.setMySMTP(Inet4Address.getByName(myIP.getText()));
+			} catch (UnknownHostException e1) {
+				System.err.println("SMTP Host did not validate.");
+			}
+			d.setConfiguration(myConf);
+			dispose();
 		}
 	}
 

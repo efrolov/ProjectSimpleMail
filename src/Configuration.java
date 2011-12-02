@@ -52,7 +52,7 @@ public class Configuration implements Serializable {
 	 * {@code Configuration} object.</p>
 	 * @param mySMTP an {@code Inet4Address} representing the IP of the SMTP server
 	 */
-	public void setMySMTP(Inet4Address mySMTP) {
+	public void setMySMTP(InetAddress mySMTP) {
 		this.mySMTP = mySMTP;
 	}
 	
