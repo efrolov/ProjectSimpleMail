@@ -1,6 +1,3 @@
-import java.io.File;
-
-
 public class SimpleMail {
 
 	/**

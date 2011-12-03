@@ -6,7 +6,10 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -14,7 +17,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-
+import javax.swing.WindowConstants;
 
 public class MainFrame extends JFrame implements ActionListener, WindowListener {
 
@@ -22,13 +25,18 @@ public class MainFrame extends JFrame implements ActionListener, WindowListener 
 	private ContactTableModel myTableModel;
 	private JContactTable myTable;
 
-	public MainFrame()
-	{
+	public MainFrame() {
 		super("SimpleMail");
-		myTableModel = new ContactTableModel();
+		this.myTableModel = new ContactTableModel();
+		try {
+			this.setIconImage(ImageIO.read(new File(DataStore.getMyFolderPath()
+					+ "icon.png")));
+		} catch (IOException e) {
+			AlertDialog a = new AlertDialog("Failed to read icon image.");
+		}
 		JFrame.setDefaultLookAndFeelDecorated(true);
 		// Create and set up the window.
-		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 		this.addWindowListener(this);
 		JMenuBar menuBar;
 		JMenu fileM, configM, helpM;
@@ -38,50 +46,47 @@ public class MainFrame extends JFrame implements ActionListener, WindowListener 
 		fileM.setMnemonic(KeyEvent.VK_F);
 		menuBar.add(fileM);
 		// Creating the MenuItems
-		f1 = new JMenuItem("Exit",
-				KeyEvent.VK_X);
+		f1 = new JMenuItem("Exit", KeyEvent.VK_X);
 		f1.setActionCommand("exit");
 		f1.addActionListener(this);
 		fileM.add(f1);
 		configM = new JMenu("Configuration");
 		configM.setMnemonic(KeyEvent.VK_C);
 		menuBar.add(configM);
-		c1 = new JMenuItem("Configure...",
-				KeyEvent.VK_C);
+		c1 = new JMenuItem("Configure...", KeyEvent.VK_C);
 		c1.setActionCommand("config");
 		c1.addActionListener(this);
 		configM.add(c1);
 		helpM = new JMenu("Help");
 		helpM.setMnemonic(KeyEvent.VK_H);
 		menuBar.add(helpM);
-		h1 = new JMenuItem("About",
-				KeyEvent.VK_A);
+		h1 = new JMenuItem("About", KeyEvent.VK_A);
 		h1.setActionCommand("about");
 		h1.addActionListener(this);
 		helpM.add(h1);
-		setJMenuBar(menuBar);
-		
+		this.setJMenuBar(menuBar);
+
 		// Create the content-pane-to-be.
 		JPanel contentPane = new JPanel(new BorderLayout());
-		
-		//Create the JPanel to hold the table
+
+		// Create the JPanel to hold the table
 		JPanel tablePane = new JPanel(new BorderLayout());
 		tablePane.setOpaque(true);
-		setContentPane(contentPane);
-		
-		//Create the table and add it to its container
-		myTable = createTable();
-		myTable.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
-		JScrollPane sP = new JScrollPane(myTable);
-		tablePane.add(sP,BorderLayout.NORTH);
-		
-		//Create the buttons panel
+		this.setContentPane(contentPane);
+
+		// Create the table and add it to its container
+		this.myTable = this.createTable();
+		this.myTable.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
+		JScrollPane sP = new JScrollPane(this.myTable);
+		tablePane.add(sP, BorderLayout.NORTH);
+
+		// Create the buttons panel
 		JPanel buttons = new JPanel();
-		
-		//Create an ActionListener
+
+		// Create an ActionListener
 		ActionListener aL = this;
-		
-		//Create the buttons and add them to their container
+
+		// Create the buttons and add them to their container
 		Button add = new Button("Add");
 		add.setSize(100, 50);
 		add.setActionCommand("add");
@@ -100,73 +105,67 @@ public class MainFrame extends JFrame implements ActionListener, WindowListener 
 		buttons.add(add);
 		buttons.add(edit);
 		buttons.add(delete);
-		
-		//Add the panels to the content pane
+
+		// Add the panels to the content pane
 		contentPane.add(buttons, BorderLayout.SOUTH);
 		contentPane.add(tablePane, BorderLayout.NORTH);
-		setSize(800, 600);
-		setVisible(true);
-	}
-	
-	private JContactTable createTable()
-	{
-		JContactTable t = new JContactTable(myTableModel);
-		return t;
+		this.setSize(800, 600);
+		this.setVisible(true);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		String s = arg0.getActionCommand();
-		if(s.compareTo("exit")==0)
-		{
-			dispose();
-		}
-		else if(s.compareTo("config")==0)
-		{
+		if (s.compareTo("exit") == 0) {
+			this.dispose();
+		} else if (s.compareTo("config") == 0) {
 			Configuration c = DataStore.getInstance().getMyConfiguration();
 			ConfigurationDialog confD = new ConfigurationDialog(c);
-		}
-		else if(s.compareTo("about")==0)
-		{
+		} else if (s.compareTo("about") == 0) {
 			SystemInformationDialog sID = new SystemInformationDialog();
-		}
-		else if(s.compareTo("add")==0)
-		{
+		} else if (s.compareTo("add") == 0) {
 			Contact b = new Contact();
 			ContactEditingDialog cEdit = new ContactEditingDialog(b);
-			while(cEdit.isValid());
-			myTable.revalidate();
-			myTable.repaint();
-		}
-		else if(s.compareTo("edit")==0)
-		{
-			try{
-			Contact c = myTable.getContactAtRow(myTable.getSelectedRow());
-			ContactEditingDialog cEdit = new ContactEditingDialog(c);
-			while(cEdit.isValid());
-			myTable.revalidate();
-			myTable.repaint();
-			} catch (ArrayIndexOutOfBoundsException e){
-				System.out.println("You have not selected a contact to be edited. " +
-						"Please select a contact and try again.");
+			while (cEdit.isValid()) {
+				;
 			}
-		}
-		else if(s.compareTo("delete")==0)
-		{
-			try{
-				Contact c = myTable.getContactAtRow(myTable.getSelectedRow());
-				DataStore.getInstance().removeContact(c);
-				myTable.revalidate();
-				myTable.repaint();
-				} catch (ArrayIndexOutOfBoundsException e){
-					System.out.println("You have not selected a contact to be deleted. " +
-							"Please select a contact and try again.");
+			this.myTable.revalidate();
+			this.myTable.repaint();
+		} else if (s.compareTo("edit") == 0) {
+			try {
+				Contact c = this.myTable.getContactAtRow(this.myTable
+						.getSelectedRow());
+				ContactEditingDialog cEdit = new ContactEditingDialog(c);
+				while (cEdit.isValid()) {
+					;
 				}
-		}
-		else
-		{
+				this.myTable.revalidate();
+				this.myTable.repaint();
+			} catch (ArrayIndexOutOfBoundsException e) {
+				System.out
+						.println("You have not selected a contact to be edited. "
+								+ "Please select a contact and try again.");
+			}
+		} else if (s.compareTo("delete") == 0) {
+			try {
+				Contact c = this.myTable.getContactAtRow(this.myTable
+						.getSelectedRow());
+				DataStore.getInstance().removeContact(c);
+				this.myTable.revalidate();
+				this.myTable.repaint();
+			} catch (ArrayIndexOutOfBoundsException e) {
+				System.out
+						.println("You have not selected a contact to be deleted. "
+								+ "Please select a contact and try again.");
+			}
+		} else {
 			System.err.println("Unhandled action.  DO SOMETHING!");
 		}
+	}
+
+	private JContactTable createTable() {
+		JContactTable t = new JContactTable(this.myTableModel);
+		return t;
 	}
 
 	@Override
@@ -181,7 +180,7 @@ public class MainFrame extends JFrame implements ActionListener, WindowListener 
 	public void windowClosing(WindowEvent arg0) {
 		DataStore d = DataStore.getInstance();
 		d.save();
-		dispose();
+		this.dispose();
 	}
 
 	@Override
@@ -189,7 +188,7 @@ public class MainFrame extends JFrame implements ActionListener, WindowListener 
 	}
 
 	@Override
-	public void windowDeiconified(WindowEvent arg0) {	
+	public void windowDeiconified(WindowEvent arg0) {
 	}
 
 	@Override
@@ -197,6 +196,6 @@ public class MainFrame extends JFrame implements ActionListener, WindowListener 
 	}
 
 	@Override
-	public void windowOpened(WindowEvent arg0) {	
+	public void windowOpened(WindowEvent arg0) {
 	}
 }
