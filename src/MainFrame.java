@@ -128,22 +128,27 @@ public class MainFrame extends JFrame implements ActionListener, WindowListener 
 		}
 		else if(s.compareTo("about")==0)
 		{
-			//Some more good stuff should happen here
+			SystemInformationDialog sID = new SystemInformationDialog();
 		}
 		else if(s.compareTo("add")==0)
 		{
 			Contact b = new Contact();
 			ContactEditingDialog cEdit = new ContactEditingDialog(b);
+			while(cEdit.isValid());
+			myTable.revalidate();
+			myTable.repaint();
 		}
 		else if(s.compareTo("edit")==0)
 		{
 			try{
 			Contact c = myTable.getContactAtRow(myTable.getSelectedRow());
 			ContactEditingDialog cEdit = new ContactEditingDialog(c);
+			while(cEdit.isValid());
+			myTable.revalidate();
+			myTable.repaint();
 			} catch (ArrayIndexOutOfBoundsException e){
 				System.out.println("You have not selected a contact to be edited. " +
 						"Please select a contact and try again.");
-				
 			}
 		}
 		else if(s.compareTo("delete")==0)
@@ -151,6 +156,8 @@ public class MainFrame extends JFrame implements ActionListener, WindowListener 
 			try{
 				Contact c = myTable.getContactAtRow(myTable.getSelectedRow());
 				DataStore.getInstance().removeContact(c);
+				myTable.revalidate();
+				myTable.repaint();
 				} catch (ArrayIndexOutOfBoundsException e){
 					System.out.println("You have not selected a contact to be deleted. " +
 							"Please select a contact and try again.");

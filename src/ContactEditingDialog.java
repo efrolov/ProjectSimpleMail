@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -104,7 +105,15 @@ public class ContactEditingDialog extends JDialog implements ActionListener {
 		setAlwaysOnTop(true);
 		setModal(true);
 		setSize(400,250);
+		this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		setVisible(true);
+	}
+	
+	private boolean validateFields()
+	{
+		return ((zipTF.getText().matches("\\d{5}") || zipTF.getText().compareTo("")==0) &&
+				(phoneTF.getText().matches("\\d{3}-\\d{3}-\\d{4}") || phoneTF.getText().compareTo("")==0) &&
+				emailTF.getText().matches("\\w+@\\w+.\\w+.\\w{3}"));
 	}
 	
 	/**
@@ -122,7 +131,18 @@ public class ContactEditingDialog extends JDialog implements ActionListener {
 		}
 		else if(action.compareTo("save")==0)
 		{
+			Contact oldRef = myContact;
 			DataStore d = DataStore.getInstance();
+			if(!validateFields())
+			{
+				AlertDialog aD = new AlertDialog("One or more of your" +
+						" entries was not of the desired format.\n" +
+						"Phone numbers should be of the format: xxx-xxx-xxxx.\n" +
+						"Email addresses should be of the format: [username]@[host].[extension].\n" +
+						"Zip codes should be of the format: xxxxx.");
+				return;
+			}
+			myContact = new Contact();
 			myContact.setMyFirst(firstTF.getText());
 			myContact.setMyMI(miTF.getText());
 			myContact.setMyLast(lastTF.getText());
@@ -132,9 +152,10 @@ public class ContactEditingDialog extends JDialog implements ActionListener {
 			myContact.setMyPhone(phoneTF.getText());
 			myContact.setMyState(stateTF.getText());
 			myContact.setMyEmail(emailTF.getText());
-			if(d.containsContact(myContact))
+			if((!oldRef.isBlank()) && d.containsContact(oldRef))
 			{
-				d.updateContact(myContact);
+				d.removeContact(oldRef);
+				d.addContact(myContact);
 			}
 			else
 			{

@@ -7,6 +7,7 @@ import java.net.Inet4Address;
 import java.net.UnknownHostException;
 
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -62,6 +63,7 @@ public class ConfigurationDialog extends JDialog implements ActionListener {
 		setAlwaysOnTop(true);
 		setModal(true);
 		setSize(250,150);
+		this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		setVisible(true);
 	}
 

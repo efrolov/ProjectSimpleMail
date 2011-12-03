@@ -9,6 +9,12 @@ public class Contact implements Serializable {
 
 	private static final long serialVersionUID = 4445549905840681824L;
 	private String myFirst, myMI, myLast, myStreetAddress, myCity, myState, myZIP, myPhone, myEmail;
+	private boolean isBlank;
+	
+	public Contact()
+	{
+		isBlank=true;
+	}
 	
 	public String getMyFirst() {
 		return myFirst;
@@ -63,6 +69,7 @@ public class Contact implements Serializable {
 	}
 	public void setMyEmail(String myEmail) {
 		this.myEmail = myEmail;
+		isBlank=false;
 	}
 	
 	/**
@@ -90,6 +97,11 @@ public class Contact implements Serializable {
 			return true;
 		}
 		return false;
+	}
+	
+	public boolean isBlank()
+	{
+		return isBlank;
 	}
 
 }

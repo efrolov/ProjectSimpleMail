@@ -50,6 +50,10 @@ public class DataStore {
 				}
 			}
 		}
+		if(myConf==null)
+		{
+			myConf = new Configuration();
+		}
 	}
 
 	/**
@@ -88,7 +92,6 @@ public class DataStore {
 
 	public void setConfiguration(Configuration c) {
 		myConf = c;
-		// /trigger refresh of table
 	}
 
 	public ArrayList<Contact> getMyContacts() {
@@ -97,22 +100,14 @@ public class DataStore {
 
 	public void addContact(Contact c) {
 		myContacts.add(c);
-		// trigger refresh
 	}
 
 	public boolean containsContact(Contact c) {
 		return myContacts.contains(c);
 	}
 
-	public void updateContact(Contact c) {
-		myContacts.remove(c);
-		myContacts.add(c);
-		// trigger refresh
-	}
-
 	public void removeContact(Contact c) {
 		myContacts.remove(c);
-		// trigger refresh
 	}
 
 	/**

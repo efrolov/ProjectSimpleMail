@@ -1,3 +1,5 @@
+import java.io.File;
+
 
 public class SimpleMail {
 
@@ -5,7 +7,7 @@ public class SimpleMail {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		DataStore.setFolderPath("data/");
+		DataStore.setFolderPath("./data/");
 		MainFrame main = new MainFrame();
 	}
 

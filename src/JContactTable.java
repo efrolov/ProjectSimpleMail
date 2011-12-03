@@ -1,14 +1,30 @@
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
 import javax.swing.JTable;
+import javax.swing.Timer;
 
 
-public class JContactTable extends JTable {
+public class JContactTable extends JTable implements MouseListener{
 
 	private static final long serialVersionUID = 118736475082270287L;
+	private int selectionIndex;
 	
 	public JContactTable(ContactTableModel myTableModel) {
 		super(myTableModel);
 		this.setDragEnabled(false);
+		this.addMouseListener(this);
 	}
+	
+    private Timer timer = new Timer(300, new ActionListener() {
+
+        public void actionPerformed(ActionEvent e) {
+            timer.stop();
+        }
+
+    });
 	
 	public Contact getContactAtRow(int row)
 	{
@@ -50,6 +66,42 @@ public class JContactTable extends JTable {
 			}
 		}
 		return c;
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent arg0) {
+		if(timer.isRunning())
+		{
+			if(selectionIndex==this.getSelectedRow())
+			{
+				EmailTransmissionDialog eTrans = new EmailTransmissionDialog(
+						this.getContactAtRow(selectionIndex)
+						);
+				selectionIndex=-1;
+			}
+			timer.stop();
+		}
+		else
+		{
+			selectionIndex = this.getSelectedRow();
+			timer.restart();
+		}
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent arg0) {
+	}
+
+	@Override
+	public void mouseExited(MouseEvent arg0) {
+	}
+
+	@Override
+	public void mousePressed(MouseEvent arg0) {
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent arg0) {
 	}
 
 }
