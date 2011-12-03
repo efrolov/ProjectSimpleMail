@@ -21,16 +21,16 @@ import javax.swing.WindowConstants;
 public class ContactEditingDialog extends JDialog implements ActionListener {
 
 	private static final long serialVersionUID = 6991911125167356556L;
-	private JTextField firstTF;
-	private JTextField miTF;
-	private JTextField lastTF;
 	private JTextField adTF;
 	private JTextField cityTF;
+	private JTextField emailTF;
+	private JTextField firstTF;
+	private JTextField lastTF;
+	private JTextField miTF;
+	private Contact myContact;
+	private JTextField phoneTF;
 	private JTextField stateTF;
 	private JTextField zipTF;
-	private JTextField phoneTF;
-	private JTextField emailTF;
-	private Contact myContact;
 
 	/**
 	 * <p>

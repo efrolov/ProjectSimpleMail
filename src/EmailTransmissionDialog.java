@@ -21,8 +21,8 @@ import javax.swing.WindowConstants;
 public class EmailTransmissionDialog extends JDialog implements ActionListener {
 
 	private static final long serialVersionUID = 3865567629290751230L;
-	private JTextField mySource, myAddressees, mySubject;
 	private JTextArea myBody;
+	private JTextField mySource, myAddressees, mySubject;
 
 	public EmailTransmissionDialog(Contact initialAddressee) {
 		super();

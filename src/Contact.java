@@ -10,9 +10,9 @@ import java.io.Serializable;
 public class Contact implements Serializable {
 
 	private static final long serialVersionUID = 4445549905840681824L;
+	private boolean isBlank;
 	private String myFirst, myMI, myLast, myStreetAddress, myCity, myState,
 			myZIP, myPhone, myEmail;
-	private boolean isBlank;
 
 	public Contact() {
 		this.isBlank = true;

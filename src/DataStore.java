@@ -14,11 +14,8 @@ import java.util.ArrayList;
  * </p>
  */
 public class DataStore {
-	private Configuration myConf;
-	private ArrayList<Contact> myContacts;
-	private static DataStore myInstance = null;
 	private static String myFolder;
-
+	private static DataStore myInstance = null;
 	/**
 	 * <p>
 	 * Returns an instance of this class if one exists and creates one if there
@@ -34,7 +31,6 @@ public class DataStore {
 		}
 		return myInstance;
 	}
-
 	public static String getMyFolderPath() {
 		return myFolder;
 	}
@@ -52,6 +48,10 @@ public class DataStore {
 	public static void setFolderPath(String fp) {
 		myFolder = fp;
 	}
+
+	private Configuration myConf;
+
+	private ArrayList<Contact> myContacts;
 
 	/**
 	 * <p>

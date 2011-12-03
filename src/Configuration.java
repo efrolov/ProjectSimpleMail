@@ -11,8 +11,8 @@ import java.net.UnknownHostException;
 public class Configuration implements Serializable {
 
 	private static final long serialVersionUID = -4042341160358404576L;
-	private InetAddress mySMTP;
 	private String myEmail;
+	private InetAddress mySMTP;
 
 	public Configuration() {
 		try {

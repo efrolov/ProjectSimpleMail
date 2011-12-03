@@ -22,8 +22,8 @@ import javax.swing.WindowConstants;
 public class MainFrame extends JFrame implements ActionListener, WindowListener {
 
 	private static final long serialVersionUID = 2269971701250845501L;
-	private ContactTableModel myTableModel;
 	private JContactTable myTable;
+	private ContactTableModel myTableModel;
 
 	public MainFrame() {
 		super("SimpleMail");
