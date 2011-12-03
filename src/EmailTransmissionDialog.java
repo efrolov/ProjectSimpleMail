@@ -44,7 +44,10 @@ public class EmailTransmissionDialog extends JDialog implements ActionListener {
 		this.myAddressees = new JTextField(initialAddressee.getMyEmail() + ",");
 		JLabel subTag = new JLabel("Subject:");
 		this.mySubject = new JTextField();
-		this.myBody = new JTextArea(20, 20);
+		//TODO Make text area size tame and ensure word wrapping.
+		this.myBody = new JTextArea();
+		this.myBody.setLineWrap(true);
+		this.myBody.setWrapStyleWord(true);
 
 		sourcePane.add(srcTag);
 		sourcePane.add(this.mySource);
