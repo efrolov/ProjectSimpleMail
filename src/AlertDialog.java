@@ -15,6 +15,8 @@ public class AlertDialog extends JDialog implements ActionListener {
 		super();
 		this.setTitle("Alert!");
 		JTextArea msg = new JTextArea(message);
+		msg.setLineWrap(true);
+		msg.setWrapStyleWord(true);
 		msg.setSize(400, 150);
 		this.getContentPane().add(msg, BorderLayout.PAGE_START);
 		Button cont = new Button("Ok");

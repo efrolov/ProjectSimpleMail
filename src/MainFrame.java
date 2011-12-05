@@ -142,9 +142,8 @@ public class MainFrame extends JFrame implements ActionListener, WindowListener 
 				this.myTable.revalidate();
 				this.myTable.repaint();
 			} catch (ArrayIndexOutOfBoundsException e) {
-				System.out
-						.println("You have not selected a contact to be edited. "
-								+ "Please select a contact and try again.");
+				AlertDialog a = new AlertDialog("You have not selected a contact to be edited. Please try again.");
+
 			}
 		} else if (s.compareTo("delete") == 0) {
 			try {
@@ -154,9 +153,7 @@ public class MainFrame extends JFrame implements ActionListener, WindowListener 
 				this.myTable.revalidate();
 				this.myTable.repaint();
 			} catch (ArrayIndexOutOfBoundsException e) {
-				System.out
-						.println("You have not selected a contact to be deleted. "
-								+ "Please select a contact and try again.");
+				AlertDialog a = new AlertDialog("You have not selected a contact to be deleted. Please try again.");
 			}
 		} else {
 			System.err.println("Unhandled action.  DO SOMETHING!");
