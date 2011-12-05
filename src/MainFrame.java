@@ -176,7 +176,13 @@ public class MainFrame extends JFrame implements ActionListener, WindowListener 
 	@Override
 	public void windowClosing(WindowEvent arg0) {
 		DataStore d = DataStore.getInstance();
-		d.save();
+		try {
+			d.save();
+		} catch (IOException e) {
+			AlertDialog a = new AlertDialog(
+					"An error occurred while trying to save data to disk."
+					);
+		}
 		this.dispose();
 	}
 

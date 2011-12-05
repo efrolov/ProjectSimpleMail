@@ -27,7 +27,17 @@ public class DataStore {
 	 */
 	public static DataStore getInstance() {
 		if (myInstance == null) {
-			myInstance = new DataStore();
+			try {
+				myInstance = new DataStore();
+			} catch (IOException e) {
+				AlertDialog a = new AlertDialog(
+						"An error occurred while trying to read in objects."
+						);
+			} catch (Exception e) {
+				AlertDialog a = new AlertDialog(
+						"A generic error occurred: "+e.getMessage()
+						);
+			}
 		}
 		return myInstance;
 	}
@@ -60,27 +70,19 @@ public class DataStore {
 	 * have been initialized prior to the call to this function.
 	 * </p>
 	 */
-	private DataStore() {
+	private DataStore() throws IOException, Exception {
 		this.myContacts = new ArrayList<Contact>();
 		File folderHandle = new File(myFolder);
 		if (folderHandle.listFiles() != null) {
 			for (File f : folderHandle.listFiles()) {
-				try {
-					if (f.getCanonicalPath().endsWith(".cont")) {
-						FileInputStream fis = new FileInputStream(f);
-						ObjectInputStream ois = new ObjectInputStream(fis);
-						this.myContacts.add((Contact) ois.readObject());
-					} else if (f.getCanonicalPath().endsWith(".conf")) {
-						FileInputStream fis = new FileInputStream(f);
-						ObjectInputStream ois = new ObjectInputStream(fis);
-						this.myConf = (Configuration) ois.readObject();
-					}
-				} catch (IOException e) {
-					System.err
-							.println("An error occurred while loading saved data.");
-				} catch (ClassNotFoundException e) {
-					System.err
-							.println("Attempted to read in a class that does not exist.");
+				if (f.getCanonicalPath().endsWith(".cont")) {
+					FileInputStream fis = new FileInputStream(f);
+					ObjectInputStream ois = new ObjectInputStream(fis);
+					this.myContacts.add((Contact) ois.readObject());
+				} else if (f.getCanonicalPath().endsWith(".conf")) {
+					FileInputStream fis = new FileInputStream(f);
+					ObjectInputStream ois = new ObjectInputStream(fis);
+					this.myConf = (Configuration) ois.readObject();
 				}
 			}
 		}
@@ -136,30 +138,19 @@ public class DataStore {
 	 * Saves all classes held by this {@code DataStore} to disk.
 	 * </p>
 	 */
-	public void save() {
+	public void save() throws IOException {
 		this.cleanDirectory(new File(myFolder));
 		for (Contact c : this.myContacts) {
-			try {
-				File f = new File(myFolder + c.getMyEmail() + ".cont");
-				FileOutputStream fos = new FileOutputStream(f);
-				ObjectOutputStream oos = new ObjectOutputStream(fos);
-				oos.writeObject(c);
-			} catch (IOException e) {
-				System.err
-						.println("An error occurred while saving contact data.\n"
-								+ e.getMessage());
-			}
+			File f = new File(myFolder + c.getMyEmail() + ".cont");
+			FileOutputStream fos = new FileOutputStream(f);
+			ObjectOutputStream oos = new ObjectOutputStream(fos);
+			oos.writeObject(c);
 		}
 		if (this.myConf != null) {
-			try {
-				File f = new File(myFolder + this.myConf.getMyEmail() + ".conf");
-				FileOutputStream fos = new FileOutputStream(f);
-				ObjectOutputStream oos = new ObjectOutputStream(fos);
-				oos.writeObject(this.myConf);
-			} catch (IOException e) {
-				System.err
-						.println("An error occurred while saving configuration data.");
-			}
+			File f = new File(myFolder + this.myConf.getMyEmail() + ".conf");
+			FileOutputStream fos = new FileOutputStream(f);
+			ObjectOutputStream oos = new ObjectOutputStream(fos);
+			oos.writeObject(this.myConf);
 		}
 	}
 
