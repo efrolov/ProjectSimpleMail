@@ -32,6 +32,7 @@ public class MainFrame extends JFrame implements ActionListener, WindowListener 
 	private static final long serialVersionUID = 2269971701250845501L;
 	private JContactTable myTable;
 	private ContactTableModel myTableModel;
+	private Button add, edit, delete;
 
 	public MainFrame() {
 		super("SimpleMail");
@@ -95,17 +96,17 @@ public class MainFrame extends JFrame implements ActionListener, WindowListener 
 		ActionListener aL = this;
 
 		// Create the buttons and add them to their container
-		Button add = new Button("Add");
+		add = new Button("Add");
 		add.setSize(100, 50);
 		add.setActionCommand("add");
 		add.addActionListener(aL);
 		add.setBackground(Color.GREEN);
-		Button edit = new Button("Edit...");
+		edit = new Button("Edit...");
 		edit.setSize(100, 50);
 		edit.setActionCommand("edit");
 		edit.addActionListener(aL);
 		edit.setBackground(Color.YELLOW);
-		Button delete = new Button("Delete");
+		delete = new Button("Delete");
 		delete.setSize(100, 50);
 		delete.setActionCommand("delete");
 		delete.addActionListener(aL);
@@ -117,6 +118,13 @@ public class MainFrame extends JFrame implements ActionListener, WindowListener 
 		// Add the panels to the content pane
 		contentPane.add(buttons, BorderLayout.SOUTH);
 		contentPane.add(tablePane, BorderLayout.NORTH);
+		if(myTable.getRowCount()<1)
+		{
+			this.delete.setFocusable(false);
+			this.edit.setFocusable(false);
+			this.delete.setEnabled(false);
+			this.edit.setEnabled(false);
+		}
 		this.setSize(800, 600);
 		this.setVisible(true);
 	}
@@ -143,11 +151,16 @@ public class MainFrame extends JFrame implements ActionListener, WindowListener 
 		} else if (s.compareTo("add") == 0) {
 			Contact b = new Contact();
 			ContactEditingDialog cEdit = new ContactEditingDialog(b);
-			while (cEdit.isValid()) {
-				;
-			}
+			while (cEdit.isValid());
 			this.myTable.revalidate();
 			this.myTable.repaint();
+			if(this.myTable.getRowCount()>0)
+			{
+				this.delete.setFocusable(true);
+				this.edit.setFocusable(true);
+				this.delete.setEnabled(true);
+				this.edit.setEnabled(true);
+			}
 		} else if (s.compareTo("edit") == 0) {
 			try {
 				Contact c = this.myTable.getContactAtRow(this.myTable
@@ -158,9 +171,8 @@ public class MainFrame extends JFrame implements ActionListener, WindowListener 
 				}
 				this.myTable.revalidate();
 				this.myTable.repaint();
-			} catch (ArrayIndexOutOfBoundsException e) {
+			} catch (IndexOutOfBoundsException e) {
 				AlertDialog a = new AlertDialog("You have not selected a contact to be edited. Please try again.");
-
 			}
 		} else if (s.compareTo("delete") == 0) {
 			try {
@@ -169,7 +181,14 @@ public class MainFrame extends JFrame implements ActionListener, WindowListener 
 				DataStore.getInstance().removeContact(c);
 				this.myTable.revalidate();
 				this.myTable.repaint();
-			} catch (ArrayIndexOutOfBoundsException e) {
+				if(myTable.getRowCount()<1)
+				{
+					this.delete.setFocusable(false);
+					this.edit.setFocusable(false);
+					this.delete.setEnabled(false);
+					this.edit.setEnabled(false);
+				}
+			} catch (IndexOutOfBoundsException e) {
 				AlertDialog a = new AlertDialog("You have not selected a contact to be deleted. Please try again.");
 			}
 		} else {
