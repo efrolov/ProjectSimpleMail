@@ -19,6 +19,14 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.WindowConstants;
 
+/**
+ * <p>
+ * A child of {@code JFrame} that implements {@code ActionListener} and 
+ * {@code WindowListener} to create a frame to display the {@code ContactTableModel}.
+ * </p>
+ * 
+ * @see ActionListener, ContactTableModel, JFrame, WindowListener 
+ */
 public class MainFrame extends JFrame implements ActionListener, WindowListener {
 
 	private static final long serialVersionUID = 2269971701250845501L;
@@ -112,7 +120,16 @@ public class MainFrame extends JFrame implements ActionListener, WindowListener 
 		this.setSize(800, 600);
 		this.setVisible(true);
 	}
-
+	
+	/**
+	 * <p>
+	 * A method of ActionListener that catches {@code ActionEvent}s created by
+	 * the menu and buttons of this dialog and reacts accordingly.
+	 * </p>
+	 * 
+	 * @param arg0
+	 *            the {@code ActionEvent} for which a reaction is necessary
+	 */
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		String s = arg0.getActionCommand();

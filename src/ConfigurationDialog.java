@@ -12,13 +12,32 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.WindowConstants;
 
+
+/**
+* <p>
+* A child of {@code JDialog} that implements {@code ActionListener} to create a
+* dialog for editing objects of type {@code Configuration}.
+* </p>
+* 
+* @see ActionListener, Configuration, JDialog
+*/
 public class ConfigurationDialog extends JDialog implements ActionListener {
 
 	private static final long serialVersionUID = 654591847880778195L;
 	private Configuration myConf;
 	private JTextField myEmail;
 	private JTextField myIP;
-
+	
+	/**
+	 * <p>
+	 * Creates a new {@code ConfigurationDialog} initialized with the values
+	 * from the {@code Configuration} passed as a parameter. The parameter must be
+	 * non-null.
+	 * </p>
+	 * 
+	 * @param c
+	 *            a {@code Configuration} to be edited by this dialog
+	 */
 	public ConfigurationDialog(Configuration c) {
 		super();
 		this.myConf = c;
@@ -65,6 +84,15 @@ public class ConfigurationDialog extends JDialog implements ActionListener {
 		this.setVisible(true);
 	}
 
+	/**
+	 * <p>
+	 * A method of ActionListener that catches {@code ActionEvent}s created by
+	 * the menu and buttons of this dialog and reacts accordingly.
+	 * </p>
+	 * 
+	 * @param arg0
+	 *            the {@code ActionEvent} for which a reaction is necessary
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		String s = e.getActionCommand();

@@ -6,6 +6,14 @@ import java.awt.event.MouseListener;
 import javax.swing.JTable;
 import javax.swing.Timer;
 
+/**
+ * <p>
+ * A child of {@code JTable} that implements {@code MouseListener} to create a
+ * table of objects of type {@code Contact}.
+ * </p>
+ * 
+ * @see Contact, JTable, MouseListener 
+ */
 public class JContactTable extends JTable implements MouseListener {
 
 	private static final long serialVersionUID = 118736475082270287L;
@@ -19,7 +27,17 @@ public class JContactTable extends JTable implements MouseListener {
 		}
 
 	});
-
+	
+	/**
+	 * <p>
+	 * Creates a new {@code JContactTable} initialized with the values
+	 * from the {@code ContactTableModel} passed as a parameter. The parameter must be
+	 * non-null.
+	 * </p>
+	 * 
+	 * @param myTableModel
+	 *            a {@code ContactTableModel} to be stored in this table
+	 */
 	public JContactTable(ContactTableModel myTableModel) {
 		super(myTableModel);
 		this.setDragEnabled(false);
@@ -64,7 +82,16 @@ public class JContactTable extends JTable implements MouseListener {
 		}
 		return c;
 	}
-
+	
+	/**
+	 * <p>
+	 * A method of MouseListener that catches {@code MouseEvent}s created by
+	 * the user and reacts accordingly.
+	 * </p>
+	 * 
+	 * @param arg0
+	 *            the {@code MouseEvent} for which a reaction is necessary
+	 */
 	@Override
 	public void mouseClicked(MouseEvent arg0) {
 		if (this.timer.isRunning()) {

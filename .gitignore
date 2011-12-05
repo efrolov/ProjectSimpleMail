@@ -1,5 +1,6 @@
 data/*
 .classpath
+.metadata/*
 .settings/*
 bin
 bin/*
