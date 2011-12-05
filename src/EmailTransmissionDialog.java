@@ -18,12 +18,30 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.WindowConstants;
 
+/**
+* <p>
+* A child of {@code JDialog} that implements {@code ActionListener} to create a
+* dialog for composing and sending a new email.
+* </p>
+* 
+* @see ActionListener, JDialog
+*/
 public class EmailTransmissionDialog extends JDialog implements ActionListener {
 
 	private static final long serialVersionUID = 3865567629290751230L;
 	private JTextArea myBody;
 	private JTextField mySource, myAddressees, mySubject;
-
+	
+	/**
+	 * <p>
+	 * Creates a new {@code EmailTransmissionDialog} initialized with the values
+	 * from the {@code Contact} passed as a parameter. The parameter must be
+	 * non-null.
+	 * </p>
+	 * 
+	 * @param initialAddressee
+	 *            a {@code Contact} of the source email address
+	 */
 	public EmailTransmissionDialog(Contact initialAddressee) {
 		super();
 		this.setTitle("Send Email");
@@ -83,7 +101,16 @@ public class EmailTransmissionDialog extends JDialog implements ActionListener {
 		this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 		this.setVisible(true);
 	}
-
+	
+	 /**
+		 * <p>
+		 * A method of ActionListener that catches {@code ActionEvent}s created by
+		 * the menu and buttons of this dialog and reacts accordingly.
+		 * </p>
+		 * 
+		 * @param arg0
+		 *            the {@code ActionEvent} for which a reaction is necessary
+		 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		String s = e.getActionCommand();

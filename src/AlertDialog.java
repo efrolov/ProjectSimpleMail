@@ -7,10 +7,28 @@ import javax.swing.JDialog;
 import javax.swing.JTextArea;
 import javax.swing.WindowConstants;
 
+/**
+* <p>
+* A child of {@code JDialog} that implements {@code ActionListener} to create a
+* dialog for displaying error messages.
+* </p>
+* 
+* @see ActionListener, JDialog
+*/
 public class AlertDialog extends JDialog implements ActionListener {
 
 	private static final long serialVersionUID = 604279692725179164L;
-
+	
+	/**
+	 * <p>
+	 * Creates a new {@code AlertDialog} initialized with the values
+	 * from the {@code String} passed as a parameter. The parameter must be
+	 * non-null.
+	 * </p>
+	 * 
+	 * @param message
+	 *            a {@code String} to be displayed by this dialog
+	 */
 	public AlertDialog(String message) {
 		super();
 		this.setTitle("Alert!");
