@@ -1,3 +1,42 @@
-This is the README for ProjectSimpleMail.
+ProjectSimpleMail
+Version 1.0
 
-One day, it will be read by many others.
+BUILD:
+javac -d bin -Djava.ext.dirs=lib/ src/*
+
+RUN:
+java -cp bin/ SimpleMail
+
+OTHER NOTES:
+You may or may not experience the icon in the application window depending on
+your OS distribution, the version of your JRE, and your preferences defined 
+in your JVM settings.
+
+The icon file is located in the data/ directory and may be substituted with any
+other icon granted that the filename and location stays the same.
+
+Suggested configurations apply only to a computer on Clemson's campus network
+tigernet.  They are as follows:
+
+SMTP Server: smtp.clemson.edu
+Main Email: [your username]@g.clemson.edu
+
+Note:  If you delete the contents of the data folder, you will lose all of your
+contact and configuration data.  This is not recoverable from the scope of this
+application.
+
+If the icon file is absent from the data folder, you will experience an error
+message on application initialization.
+
+User experiences of the UI will vary depending on JRE versions and OS
+ distributions.
+
+DEPENDENCIES:
+This project depends on the JavaMail 1.4.4 library released under the 
+specifications of FOSS (Free and Open Sourced Software) and is used 
+appropriately as such.
+
+LICENSE:
+This application and all of its source is released under the terms of the 
+GPL(v3) license.  All original source from this project is openly 
+available to the public and can be shared, edited, and copied freely.
